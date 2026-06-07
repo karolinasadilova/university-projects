@@ -5,5 +5,9 @@ at Palacký University in Olomouc.
 ## Year 1
 
 #### Algorithms 1,2
-## Discrete structures 1,2
-## C Programming 
+#### Discrete structures 1,2
+#### C Programming 1,2
+#### Programming paradigms 1,2
+#### User interfaces
+#### IT
+#### Computer structures
