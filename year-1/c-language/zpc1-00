@@ -1,0 +1,243 @@
+
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+/*/
+int delete_words(char src[], char words[]) {
+    char result[1000];
+    int rpos = 0;
+    int deleted = 0;
+
+    int i = 0;
+    while (src[i] != '\0') {
+
+        //nacte jedno slovo ze src
+        char word[100];
+        int wpos = 0;
+
+        while (src[i] != '\0' && src[i] != ' ') {
+            word[wpos++] = src[i++];
+        }
+        word[wpos] = '\0';
+
+        //preskoci mezeru
+        if (src[i] == ' ')
+            i++;
+
+        //overuje jestli je v seznamu words
+        int remove = 0;
+
+        int j = 0;
+        while (words[j] != '\0') {
+            char w[100];
+            int k = 0;
+
+            while (words[j] != '\0' && words[j] != ' ') {
+                w[k++] = words[j++];
+            }
+            w[k] = '\0';
+
+            if (words[j] == ' ')
+                j++;
+
+            if (strcmp(word, w) == 0) {
+                remove = 1;
+                break;
+            }
+        }
+
+        if (remove) {
+            deleted++;
+            continue;
+        }
+
+        //prida slovo do resultu
+        if (rpos != 0) {
+            result[rpos++] = ' ';
+        }
+
+        for (int x = 0; word[x] != '\0'; x++) {
+            result[rpos++] = word[x];
+        }
+    }
+
+    result[rpos] = '\0';
+
+    //vysledek
+    strcpy(src, result);
+
+    return deleted;
+}
+ /*/
+/*
+int main(void) {
+    char src[] = "ahoj svete";
+    char words[] = "ahoj";
+
+    int d = delete_words(src, words);
+
+    printf("Vysledek: \"%s\"\n", src);
+    printf("Smazano slov: %d\n", d);
+
+    return 0;
+}
+
+  testovaci soubor pro domaci ukol 1
+*/
+
+/*
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+*/
+//
+int delete_words(char *src, char*words) {
+char result[1000];
+int rpos = 0;
+int deleted = 0;
+
+int i = 0;
+ while (src[i] != '\0') {
+
+    //nacte jedno slovo ze src
+    char word[100];
+    int wpos = 0;
+
+    while (src[i] != '\0' && src[i] != ' ') {
+        word[wpos++] = src[i++];
+    }
+    word[wpos] = '\0';
+
+    //preskoci mezeru
+    if (src[i] == ' ')
+        i++;
+
+    //overuje jestli je v seznamu words
+    int remove = 0;
+
+    int j = 0;
+    while (words[j] != '\0') {
+        char w[100];
+        int k = 0;
+
+        while (words[j] != '\0' && words[j] != ' ') {
+            w[k++] = words[j++];
+        }
+        w[k] = '\0';
+
+        if (words[j] == ' ')
+            j++;
+
+        if (strcmp(word, w) == 0) {
+            remove = 1;
+            break;
+        }
+    }
+
+    if (remove) {
+        deleted++;
+        continue;
+    }
+
+    //prida slovo do resultu
+    if (rpos != 0) {
+        result[rpos++] = ' ';
+    }
+
+    for (int x = 0; word[x] != '\0'; x++) {
+        result[rpos++] = word[x];
+    }
+}
+
+result[rpos] = '\0';
+
+//vysledek
+strcpy(src, result);
+
+return deleted;
+}
+
+
+
+//int delete_words(char* src, char* words)
+//{
+//    return 0;
+//}
+
+
+//
+// pomocne funkce pro testovani
+//
+
+void run_test(char* src, char* words, char* result, int deleted)
+{
+    static int tests;
+    tests += 1;
+    printf("Test %.2i", tests);
+
+    long n = strlen(src);
+    char *clone = malloc(n + 1);
+    memcpy(clone, src, n+1);
+    
+    int d = delete_words(clone, words);
+
+    if (d == deleted && !strcmp(clone, result))
+    {
+        printf(" .....................................................[pass]\n");
+    }
+    else
+    {
+        printf(" .....................................................[fail]\n");
+        printf("        expected src = \"%s\"\n", result);
+        printf("                 ret = %i\n",     deleted);
+        printf("             got src = \"%s\"\n", clone);
+        printf("                 ret = %i\n",     d);
+    }
+
+    free(clone);
+}
+
+
+int main(void)
+{
+    
+    run_test("aa bb cc",
+         "bb",
+         "aa cc",
+         1);
+  
+    run_test("aa bb cc nejaka slova uprostred dd",
+         "bb cc dd ahoj priklad slov",
+         "aa nejaka slova uprostred",
+         3);
+
+    run_test("aa bb cc dd ee",
+         "bb aa dd ee cc",
+         "",
+         5);
+
+    run_test("aa bb cc dd",
+         "ee ff gg hh",
+         "aa bb cc dd",
+         0);
+  
+    run_test("",
+         "a b c d",
+         "",
+         0);
+
+    run_test("aa bb cc dd",
+         "",
+         "aa bb cc dd",
+         0);
+
+    // muzete si doplnit dalsi testy
+
+    
+    return 0;
+}
+
